@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop
+	 http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/tx
+	 http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	 "
+	default-autowire="byName">
+		<!-- 任务调度 -->
+	<!-- taskMethod -->	
+	<!-- <bean id="taskMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="task"></property>
+		<property name="targetMethod" value="show"></property>
+	</bean> -->
+	<!--  调度的计划 -->
+	<!-- <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="taskMethod"></property>
+		<property name="cronExpression" value="*/5 * * * * ?"></property>
+	</bean> -->
+	<!-- taskFactory -->
+	<!-- <bean id="taskFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger"/>
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- sessionFactory -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/totyuoa"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<!-- <property name="configLocation" value="classPath:hibernate.cfg.xml"></property> -->
+		<!-- <property name="dataSource" ref="dataSource"></property> -->
+		<property name="hibernateProperties" >
+			<props>
+				<prop key="show_sql">true</prop>
+				<prop key="format_sql">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<value>vo</value>
+		</property>
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
+	</bean>
+	<!-- 配置事务 -->
+	<bean id="tcManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
+	</bean>
+	<!-- 补充细节 -->
+	<tx:advice id="txAdvice" transaction-manager="tcManager">
+		<tx:attributes>
+			<!-- propagation事务传播机制 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="up*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- <aop:config>
+		<aop:pointcut id="pointcut" expression="execution(public * com.service..*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config> -->
+	<context:component-scan base-package="vo,daoimpl,service,action,quartz"></context:component-scan>
+	
+</beans>

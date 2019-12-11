@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- //字符过滤器 -->
+	<filter>
+		<filter-name>endocingFilter</filter-name>
+		<filter-class>filter.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>endocingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>login.html</welcome-file>
+	</welcome-file-list>
+
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 用户 -->
+	<!-- 
+	<servlet>
+		<servlet-name>userServlet</servlet-name>
+		<servlet-class>controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userServlet</servlet-name>
+		<url-pattern>/user</url-pattern>
+	</servlet-mapping>
+
+	产品
+	<servlet>
+		<servlet-name>productServlet</servlet-name>
+		<servlet-class>controller.ProductServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>productServlet</servlet-name>
+		<url-pattern>/pro</url-pattern>
+	</servlet-mapping>
+	订单
+		<servlet>
+		<servlet-name>orderServlet</servlet-name>
+		<servlet-class>controller.OrderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orderServlet</servlet-name>
+		<url-pattern>/order</url-pattern>
+	</servlet-mapping>
+	
+	初始化页面
+	<servlet>
+		<servlet-name>productTypeServlet</servlet-name>
+		<servlet-class>controller.ProductTypeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>productTypeServlet</servlet-name>
+		<url-pattern>/proType</url-pattern>
+	</servlet-mapping>
+
+	后台管理
+		<servlet>
+		<servlet-name>backstageServlet</servlet-name>
+		<servlet-class>controller.BackstageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>backstageServlet</servlet-name>
+		<url-pattern>/Backstage</url-pattern>
+	</servlet-mapping> -->
+</web-app>

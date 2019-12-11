@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+
+		<property name="connection.url">
+			jdbc:mysql://localhost:3306/totyuoa
+		</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">123456</property>
+		<property name="connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.DerbyDialect
+		</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.cache.provider_class">
+			org.hibernate.cache.EhCacheProvider
+		</property>
+		<!-- <mapping resource="vo/Emp.hbm.xml"></mapping> <mapping resource="vo/Dept.hbm.xml"></mapping> -->
+		<mapping class="vo.Position" />
+		<mapping class="vo.Department" />
+		<mapping class="vo.Employee" />
+		<mapping class="vo.Leave" />
+		<mapping class="vo.Claim_Voucher" />
+		<mapping class="vo.Claim_Voucher_Detail" />
+		<mapping class="vo.Voucher_Month"/>
+		<mapping class="vo.Voucher_Year"/>
+		<mapping class="vo.Check_Result"/>
+		<mapping class="vo.V_M"/>
+		<mapping class="vo.V_Y"/>
+	</session-factory>
+
+</hibernate-configuration>
+
+
